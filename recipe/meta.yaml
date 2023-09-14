@@ -1,19 +1,17 @@
-{% set author = "snowflakedb" %}
 {% set name = "snowflake-telemetry-python" %}
-{% set version = "0.1.0" %}
-{% set sha256 = "f7026cf3aabc34650f67a20d0247cedc8bb8ef62df20de38a429bf6a53cb8578" %}
+{% set version = "0.2.0" %}
 
 package:
   name: {{ name|lower }}
   version: {{ version }}
 
 source:
-  url: https://github.com/{{ author }}/{{ name }}/archive/refs/tags/v{{ version }}.tar.gz
-  sha256: {{ sha256 }}
+  url: https://github.com/snowflakedb/{{ name }}/archive/refs/tags/v{{ version }}.tar.gz
+  sha256: dde61307590a944b50745e199f3dfa3cc1b1966fd0f5aa030d8e905c81083460
 
 build:
   number: 0
-  script: {{ PYTHON }} -m pip install . -vv --no-deps
+  script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
 
 requirements:
   host:
@@ -23,9 +21,9 @@ requirements:
     - pip
   run:
     - python
-    - opentelemetry-sdk==1.12.0
-    - opentelemetry-api==1.12.0
-    - opentelemetry-exporter-otlp==1.12.0
+    - opentelemetry-sdk 1.12.0
+    - opentelemetry-api 1.12.0
+    - opentelemetry-exporter-otlp 1.12.0
 
 test:
   requires:
@@ -48,7 +46,6 @@ about:
   license_family: Apache
   license_file: LICENSE.txt
   doc_url: https://github.com/snowflakedb/snowflake-telemetry-python/blob/main/README.md
-  doc_source_url: https://github.com/snowflakedb/snowflake-telemetry-python/blob/main/README.md
   dev_url: https://github.com/snowflakedb/snowflake-telemetry-python
 
 
