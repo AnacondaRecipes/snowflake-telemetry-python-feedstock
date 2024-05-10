@@ -35,7 +35,6 @@ test:
     - pytest
   source_files:
     - tests
-    - src
   commands:
     - pip check
     # nothing will be installed from pypi because all 
