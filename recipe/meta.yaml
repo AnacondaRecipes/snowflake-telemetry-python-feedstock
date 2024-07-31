@@ -1,5 +1,5 @@
 {% set name = "snowflake-telemetry-python" %}
-{% set version = "0.4.0" %}
+{% set version = "0.5.0" %}
 
 package:
   name: {{ name|lower }}
@@ -7,7 +7,7 @@ package:
 
 source:
   url: https://github.com/snowflakedb/{{ name }}/archive/refs/tags/v{{ version }}.tar.gz
-  sha256: e9513724e10c545e7ba7600b3a29914b053e4ae573bc5196a25f8d66d69fa615
+  sha256: ae698b84e9ead7ea24c0ed4ede03f783517d9faf2628bc8c297c74792e961276
 
 build:
   number: 0
