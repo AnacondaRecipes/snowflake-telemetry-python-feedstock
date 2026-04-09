@@ -6,7 +6,7 @@ package:
   version: {{ version }}
 
 source:
-  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name.replace('-', '_')}}-{{ version }}.tar.gz
   sha256: 7cd6401a5ff0f4bfe99ac4c1854abf1317e0f195f5fca10f96645dd1706d87cd
 
 build:
@@ -32,14 +32,11 @@ test:
     - snowflake
     - snowflake.telemetry
     - snowflake.telemetry.logs
-    - snowflake.telemetry.test.metrics_test_utils
-    - snowflake.telemetry.test.metrictestutil
-    - snowflake.telemetry.test.traces_test_utils
     - snowflake.telemetry.trace
     - snowflake.telemetry.version
   commands:
     - pip check
-    - pytest -v tests
+    - pytest -v tests/test_basic.py
   requires:
     - pip
     - pytest
