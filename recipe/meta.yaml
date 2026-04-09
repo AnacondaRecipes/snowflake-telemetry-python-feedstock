@@ -1,49 +1,51 @@
 {% set name = "snowflake-telemetry-python" %}
-{% set version = "0.5.0" %}
+{% set version = "0.8.0" %}
 
 package:
-  name: {{ name|lower }}
+  name: {{ name }}
   version: {{ version }}
 
 source:
-  url: https://github.com/snowflakedb/{{ name }}/archive/refs/tags/v{{ version }}.tar.gz
-  sha256: ae698b84e9ead7ea24c0ed4ede03f783517d9faf2628bc8c297c74792e961276
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: 7cd6401a5ff0f4bfe99ac4c1854abf1317e0f195f5fca10f96645dd1706d87cd
 
 build:
   number: 0
-  skip: true  # [py<38]
   script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
+  skip: true  # [py<39 and py>314]
 
 requirements:
   host:
-    - python
-    - setuptools
-    - wheel
     - pip
+    - python
+    - wheel
+    - setuptools >=40.6.0
   run:
     - python
-    - opentelemetry-api ==1.23.0
-    - opentelemetry-exporter-otlp-proto-common ==1.23.0
-    - opentelemetry-sdk ==1.23.0
+    - opentelemetry-api ==1.38.0
+    - opentelemetry-sdk ==1.38.0
 
 test:
+  source_files:
+    - tests
   imports:
+    - snowflake
     - snowflake.telemetry
+    - snowflake.telemetry.logs
+    - snowflake.telemetry.test.metrics_test_utils
+    - snowflake.telemetry.test.metrictestutil
+    - snowflake.telemetry.test.traces_test_utils
+    - snowflake.telemetry.trace
     - snowflake.telemetry.version
+  commands:
+    - pip check
+    - pytest -v tests
   requires:
     - pip
     - pytest
-  source_files:
-    - tests
-  commands:
-    - pip check
-    # nothing will be installed from pypi because all 
-    # of the requirements are already satisfied
-    - pip install tests/snowflake-telemetry-test-utils
-    - pytest tests
 
 about:
-  home: https://github.com/snowflakedb/snowflake-telemetry-python
+  home: https://www.snowflake.com
   summary: Snowflake Telemetry for Python
   description: |
       snowflake-telemetry-python is a package that supports emitting
@@ -53,7 +55,6 @@ about:
   license: Apache-2.0
   license_family: Apache
   license_file: LICENSE.txt
-  doc_url: https://github.com/snowflakedb/snowflake-telemetry-python/blob/main/README.md
+  doc_url: https://docs.snowflake.com/en/developer-guide/logging-tracing/tracing-python
   dev_url: https://github.com/snowflakedb/snowflake-telemetry-python
-
 
